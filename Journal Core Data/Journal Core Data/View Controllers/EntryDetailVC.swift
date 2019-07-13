@@ -12,8 +12,9 @@ class EntryDetailVC: UIViewController {
     
     //MARK: - Outlets
     
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var notesTextView:  UITextView!
+    @IBOutlet weak var titleTextField:     UITextField!
+    @IBOutlet weak var notesTextView:      UITextView!
+    @IBOutlet weak var moodSegmentControl: UISegmentedControl!
     
     var entry: Entry? {
         didSet {
@@ -51,8 +52,15 @@ class EntryDetailVC: UIViewController {
     private func updateViews() {
         guard isViewLoaded else { return }
         self.navigationItem.title = entry?.title ?? "Create Entry"
-        titleTextField.text       = entry?.title
-        notesTextView.text        = entry?.bodyText
+        let mood: Moods
+        if let entryMood = entry?.mood {
+            mood = Moods(rawValue: entryMood)!
+        } else {
+            mood = .meh
+        }
+        moodSegmentControl.selectedSegmentIndex = Moods.allCases.firstIndex(of: mood)!
+        titleTextField.text = entry?.title
+        notesTextView.text  = entry?.bodyText
         
     }
     
@@ -63,10 +71,13 @@ class EntryDetailVC: UIViewController {
             let entryNotes = notesTextView.text, !entryNotes.isEmpty else {
                 return
         }
-        if let entry = entry {
-            entryController?.update(entry: entry, title: entryTitle, bodyText: entryNotes)
+        let moodIndex = moodSegmentControl.selectedSegmentIndex
+        let mood = Moods.allCases[moodIndex]
+        
+        if let entry = self.entry {
+            entryController?.update(entry: entry, title: entryTitle, bodyText: entryNotes, mood: mood )
         } else {
-            entryController?.createEntry(title: entryTitle, bodyText: entryNotes)
+            entryController?.createEntry(title: entryTitle, bodyText: entryNotes, mood: mood)
         }
         navigationController?.popViewController(animated: true)
     }

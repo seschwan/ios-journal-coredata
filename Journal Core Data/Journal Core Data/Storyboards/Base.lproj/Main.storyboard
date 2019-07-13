@@ -117,8 +117,16 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Fnj-an-iev">
+                                <rect key="frame" x="16" y="202" width="382" height="29"/>
+                                <segments>
+                                    <segment title="Happy"/>
+                                    <segment title="Meh"/>
+                                    <segment title="Sad"/>
+                                </segments>
+                            </segmentedControl>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="v9E-d5-iOr">
-                                <rect key="frame" x="16" y="202" width="382" height="410"/>
+                                <rect key="frame" x="16" y="246" width="382" height="416"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -126,13 +134,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="1JL-V5-XUW" firstAttribute="trailing" secondItem="Niz-Fg-sT6" secondAttribute="trailing" constant="16" id="0hL-Ya-4vn"/>
-                            <constraint firstItem="v9E-d5-iOr" firstAttribute="leading" secondItem="1JL-V5-XUW" secondAttribute="leading" constant="16" id="3BM-hz-DT0"/>
-                            <constraint firstItem="1JL-V5-XUW" firstAttribute="trailing" secondItem="v9E-d5-iOr" secondAttribute="trailing" constant="16" id="SmT-1B-Sq4"/>
-                            <constraint firstItem="1JL-V5-XUW" firstAttribute="bottom" secondItem="v9E-d5-iOr" secondAttribute="bottom" constant="250" id="YF6-ye-ZNH"/>
-                            <constraint firstItem="Niz-Fg-sT6" firstAttribute="top" secondItem="1JL-V5-XUW" secondAttribute="top" constant="16" id="nZq-yS-hMi"/>
-                            <constraint firstItem="v9E-d5-iOr" firstAttribute="top" secondItem="Niz-Fg-sT6" secondAttribute="bottom" constant="16" id="o3a-AE-64E"/>
-                            <constraint firstItem="Niz-Fg-sT6" firstAttribute="leading" secondItem="1JL-V5-XUW" secondAttribute="leading" constant="16" id="uuj-aD-Nqe"/>
+                            <constraint firstItem="Niz-Fg-sT6" firstAttribute="leading" secondItem="1JL-V5-XUW" secondAttribute="leading" constant="16" id="51c-8i-boZ"/>
+                            <constraint firstItem="1JL-V5-XUW" firstAttribute="bottom" secondItem="v9E-d5-iOr" secondAttribute="bottom" constant="200" id="5jX-dq-5Eo"/>
+                            <constraint firstItem="Niz-Fg-sT6" firstAttribute="top" secondItem="1JL-V5-XUW" secondAttribute="top" constant="16" id="Et9-TB-R9F"/>
+                            <constraint firstItem="1JL-V5-XUW" firstAttribute="trailing" secondItem="v9E-d5-iOr" secondAttribute="trailing" constant="16" id="Im4-Qh-SdN"/>
+                            <constraint firstItem="Fnj-an-iev" firstAttribute="leading" secondItem="1JL-V5-XUW" secondAttribute="leading" constant="16" id="fi7-Tf-7OO"/>
+                            <constraint firstItem="v9E-d5-iOr" firstAttribute="top" secondItem="Fnj-an-iev" secondAttribute="bottom" constant="16" id="g4w-lp-e1H"/>
+                            <constraint firstItem="1JL-V5-XUW" firstAttribute="trailing" secondItem="Fnj-an-iev" secondAttribute="trailing" constant="16" id="mKn-nY-pEC"/>
+                            <constraint firstItem="Fnj-an-iev" firstAttribute="top" secondItem="Niz-Fg-sT6" secondAttribute="bottom" constant="16" id="pUe-Kw-Ix0"/>
+                            <constraint firstItem="1JL-V5-XUW" firstAttribute="trailing" secondItem="Niz-Fg-sT6" secondAttribute="trailing" constant="16" id="r6d-Em-X2f"/>
+                            <constraint firstItem="v9E-d5-iOr" firstAttribute="leading" secondItem="1JL-V5-XUW" secondAttribute="leading" constant="16" id="zsR-Jh-NS5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1JL-V5-XUW"/>
                     </view>
@@ -144,13 +155,14 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="moodSegmentControl" destination="Fnj-an-iev" id="L3D-zb-gfM"/>
                         <outlet property="notesTextView" destination="v9E-d5-iOr" id="jdg-5Q-fNz"/>
                         <outlet property="titleTextField" destination="Niz-Fg-sT6" id="2fk-ti-a6q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dTH-g6-kKG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1806" y="138"/>
+            <point key="canvasLocation" x="1805.7971014492755" y="137.94642857142856"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Muo-55-gub">
