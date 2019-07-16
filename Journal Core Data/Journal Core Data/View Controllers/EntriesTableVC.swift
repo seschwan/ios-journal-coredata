@@ -21,7 +21,7 @@ class EntriesTableVC: UIViewController, NSFetchedResultsControllerDelegate {
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "mood", ascending: true), NSSortDescriptor(key: "timestamp", ascending: true)]
         
         let moc = CoreDataStack.shared.mainContext
-        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc, sectionNameKeyPath: "mood", cacheName: nil)
+        let frc = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: moc, sectionNameKeyPath: "mood", cacheName: nil) // sectionNamePath is setting the sections. 
         frc.delegate = self
         try! frc.performFetch()
         return frc

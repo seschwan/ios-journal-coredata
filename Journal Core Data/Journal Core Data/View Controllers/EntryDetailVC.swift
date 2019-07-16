@@ -56,7 +56,7 @@ class EntryDetailVC: UIViewController {
         if let entryMood = entry?.mood {
             mood = Moods(rawValue: entryMood)!
         } else {
-            mood = .meh
+            mood = Moods(rawValue: Moods.meh.rawValue)!
         }
         moodSegmentControl.selectedSegmentIndex = Moods.allCases.firstIndex(of: mood)!
         titleTextField.text = entry?.title
@@ -72,7 +72,7 @@ class EntryDetailVC: UIViewController {
                 return
         }
         let moodIndex = moodSegmentControl.selectedSegmentIndex
-        let mood = Moods.allCases[moodIndex]
+        let mood = Moods.allCases[moodIndex].rawValue
         
         if let entry = self.entry {
             entryController?.update(entry: entry, title: entryTitle, bodyText: entryNotes, mood: mood )

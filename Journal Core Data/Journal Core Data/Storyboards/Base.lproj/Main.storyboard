@@ -120,9 +120,9 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Fnj-an-iev">
                                 <rect key="frame" x="16" y="202" width="382" height="29"/>
                                 <segments>
-                                    <segment title="Happy"/>
-                                    <segment title="Meh"/>
-                                    <segment title="Sad"/>
+                                    <segment title="😀"/>
+                                    <segment title="😐"/>
+                                    <segment title="😢"/>
                                 </segments>
                             </segmentedControl>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="v9E-d5-iOr">
