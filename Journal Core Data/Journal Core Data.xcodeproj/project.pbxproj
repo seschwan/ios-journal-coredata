@@ -18,6 +18,7 @@
 		EF16EE0022D6A97200ECD8AE /* Entry+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF16EDFF22D6A97200ECD8AE /* Entry+Convenience.swift */; };
 		EF16EE0222D6ABB600ECD8AE /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF16EE0122D6ABB600ECD8AE /* CoreDataStack.swift */; };
 		EF16EE0522D6C4AE00ECD8AE /* EntryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF16EE0422D6C4AE00ECD8AE /* EntryController.swift */; };
+		EF3430A022DE7C2000558BA7 /* EntryRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF34309F22DE7C2000558BA7 /* EntryRepresentation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		EF16EDFF22D6A97200ECD8AE /* Entry+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+Convenience.swift"; sourceTree = "<group>"; };
 		EF16EE0122D6ABB600ECD8AE /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		EF16EE0422D6C4AE00ECD8AE /* EntryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryController.swift; sourceTree = "<group>"; };
+		EF34309F22DE7C2000558BA7 /* EntryRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryRepresentation.swift; sourceTree = "<group>"; };
 		EF429D6B22D92D32004EB989 /* Entry 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Entry 2.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				EF16EE0422D6C4AE00ECD8AE /* EntryController.swift */,
+				EF34309F22DE7C2000558BA7 /* EntryRepresentation.swift */,
 			);
 			path = "Core Data Controller";
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				EF16EDFE22D6A89100ECD8AE /* Entry.xcdatamodeld in Sources */,
 				EF16EE0022D6A97200ECD8AE /* Entry+Convenience.swift in Sources */,
 				EF16EE0522D6C4AE00ECD8AE /* EntryController.swift in Sources */,
+				EF3430A022DE7C2000558BA7 /* EntryRepresentation.swift in Sources */,
 				EF16EDE122D6944300ECD8AE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
