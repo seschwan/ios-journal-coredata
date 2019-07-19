@@ -18,11 +18,15 @@ enum HTTPMethods: String {
 
 class EntryController {
     
+    init() {
+        self.fetchEntriesFromServer()
+    }
+    
     let baseURL = URL(string: "https://journalcoredata-446c0.firebaseio.com/")!
     
-//    var entries: [Entry] {
-//        return loadFromPersistentStore()
-//    }
+    //    var entries: [Entry] {
+    //        return loadFromPersistentStore()
+    //    }
     
     typealias CompletionHandler = (Error?) -> Void
     
@@ -55,7 +59,100 @@ class EntryController {
                 return
             }
             completion(nil)
+            }.resume()
+    }
+    
+    func fetchEntriesFromServer(completion: @escaping CompletionHandler = { _ in }) {
+        let requestURL = baseURL.appendingPathExtension("json")
+        
+        URLSession.shared.dataTask(with: requestURL) { (data, _, error) in
+            if let error = error {
+                NSLog("Error fetching entries: \(error)")
+                completion(error)
+                return
+            }
+            guard let data = data else { NSLog("No data was returned by the entry"); completion(error); return }
+            
+            DispatchQueue.main.async {
+                do {
+                    let entryReps = Array(try JSONDecoder().decode([String : EntryRepresentation].self, from: data).values)
+                    for entryRep in entryReps {
+                        let identifier = entryRep.identifier
+                        if let entry = self.fetchSingleEntryFromPersistentStore(uuid: identifier) {
+                            self.update(entry: entry, representation: entryRep)
+                        } else {
+                            let _ = Entry(entryRep: entryRep)
+                        }
+                    }
+                    self.saveToPersistentStore()
+                    completion(nil)
+                } catch {
+                    NSLog("Error decoding entry: \(error)")
+                    completion(error)
+                    return
+                }
+            }
         }.resume()
+    }
+    
+    
+    
+    
+    func saveToPersistentStore() {
+        let moc = CoreDataStack.shared.mainContext
+        do {
+            try moc.save()
+        } catch {
+            moc.reset()
+            NSLog("Error saving to core data: \(error)")
+        }
+    }
+    
+    //    func loadFromPersistentStore() -> [Entry] {
+    //        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
+    //        let moc = CoreDataStack.shared.mainContext
+    //        do {
+    //            let entries = try moc.fetch(fetchRequest)
+    //            return entries
+    //        } catch {
+    //            NSLog("Error fetching the entries: \(error)")
+    //        }
+    //        return []
+    //    }
+    
+    func fetchSingleEntryFromPersistentStore(uuid: String) -> Entry? {
+        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "identifier == %@", uuid)
+        
+        do {
+            let moc = CoreDataStack.shared.mainContext
+            return try moc.fetch(fetchRequest).first
+        } catch {
+            NSLog("Error fetching entry with UUID \(uuid) \(error)")
+            return nil
+        }
+    }
+    
+    func createEntry(title: String, bodyText: String, mood: Moods) {
+        let entry = Entry(title: title, bodyText: bodyText, mood: mood)
+        put(entry: entry)
+        saveToPersistentStore()
+    }
+    
+    func update(entry: Entry, representation: EntryRepresentation) {
+        entry.title     = representation.title
+        entry.bodyText  = representation.bodyText
+        entry.mood      = representation.mood
+        entry.timestamp = representation.timestamp
+    }
+    
+    func updateEntry(entry: Entry, title: String, bodyText: String, timestamp: Date = Date(), mood: Moods) {
+        entry.title     = title
+        entry.bodyText  = bodyText
+        entry.timestamp = timestamp
+        entry.mood      = mood.rawValue
+        put(entry: entry)
+        saveToPersistentStore()
     }
     
     func deleteEntryFromServer(entry: Entry, completion: @escaping CompletionHandler = { _ in }) {
@@ -67,56 +164,23 @@ class EntryController {
         var request = URLRequest(url: requestURL)
         request.httpMethod = HTTPMethods.delete.rawValue
         
-        URLSession.shared.dataTask(with: requestURL) { (_, response, error) in
-            if let error = error {
-                NSLog("Error deleting from server")
-                completion(error)
-                return
-            }
-        }.resume()
-    }
-    
-    
-    func saveToPersistentStore() {
-        let moc = CoreDataStack.shared.mainContext
-        do {
-            try moc.save()
-        } catch {
-            NSLog("Error saving to core data: \(error)")
-        }
-    }
-    
-//    func loadFromPersistentStore() -> [Entry] {
-//        let fetchRequest: NSFetchRequest<Entry> = Entry.fetchRequest()
-//        let moc = CoreDataStack.shared.mainContext
-//        do {
-//            let entries = try moc.fetch(fetchRequest)
-//            return entries
-//        } catch {
-//            NSLog("Error fetching the entries: \(error)")
-//        }
-//        return []
-//    }
-    
-    func createEntry(title: String, bodyText: String, mood: Moods) {
-        let entry = Entry(title: title, bodyText: bodyText, mood: mood)
-        put(entry: entry)
-        saveToPersistentStore()
-    }
-    
-    func update(entry: Entry, title: String, bodyText: String, timestamp: Date = Date(), mood: Moods) {
-        entry.title     = title
-        entry.bodyText  = bodyText
-        entry.timestamp = timestamp
-        entry.mood      = mood.rawValue
-        put(entry: entry)
-        saveToPersistentStore()
+        URLSession.shared.dataTask(with: request) { (_, response, error) in
+            print(response!)
+            completion(error)
+            return
+            }.resume()
     }
     
     func delete(entry: Entry) {
-        let moc = CoreDataStack.shared.mainContext
-        moc.delete(entry)
-        deleteEntryFromServer(entry: entry)
-        saveToPersistentStore()
+        self.deleteEntryFromServer(entry: entry) { (error) in
+            if let error = error {
+                NSLog("Error deleting entry from server: \(error)")
+                return
+            }
+            
+            let moc = CoreDataStack.shared.mainContext
+            moc.delete(entry)
+            self.saveToPersistentStore()
+        }
     }
 }

@@ -86,15 +86,8 @@ extension EntriesTableVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let entry = self.fetchedResultsController.object(at: indexPath)
-            let moc = CoreDataStack.shared.mainContext
-            moc.delete(entry)
-            do {
-                try moc.save()
-                self.tableView.reloadData()
-            } catch {
-                moc.reset()
-                NSLog("Error saving managed object context: \(error)")
-            }
+            self.entryController.delete(entry: entry)
+            self.tableView.reloadData()
         }
     }
     
